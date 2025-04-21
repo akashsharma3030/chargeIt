@@ -9,7 +9,6 @@ The project is built using:
 - **Quarkus** framework for lightweight and fast microservices
 - **Gradle** for build automation
 - **Jakarta Validation** for input validation
-- **MockServer** and **RestAssured** for testing
 
 ## Features
 - Start a charging session with driver and station details.
@@ -41,7 +40,8 @@ You can use the provided `run-docker.sh` script to build and run the application
    Run the script:
    ./run-docker.sh
    The application will be available at http://localhost:8080/charging-session/start.
-   Curl Url
+
+   Curl Url <br>
    curl -X 'POST' \
   'http://localhost:8080/charging-session/start' \
   -H 'accept: */*' \
