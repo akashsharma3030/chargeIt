@@ -40,9 +40,23 @@ You can use the provided `run-docker.sh` script to build and run the application
    chmod +x run-docker.sh
    Run the script:
    ./run-docker.sh
-   The application will be available at http://localhost:8080.
+   The application will be available at http://localhost:8080/charging-session/start.
+   Curl Url
+   curl -X 'POST' \
+  'http://localhost:8080/charging-session/start' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "stationId": 12345,
+  "driverToken": "12345678901234567890",
+  "callBackUrl": "http://localhost:8080/test"
+}'
 
-2. Run the Application Locally You can run the application directly using the `MainApplication` Kotlin class. Use the following command:
+Allowed Drivers and Statio id can be updated in the file application.properties currently below values are added: 
+allowed.drivers=12345678901234567890
+allowed.station.id=12345
+
+3. Run the Application Locally You can run the application directly using the `MainApplication` Kotlin class. Use the following command:
 
 ### 3. Swagger API Documentation is available at http://localhost:8080/swagger-ui/index.html#/
 
