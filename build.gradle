@@ -1,0 +1,69 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version "1.9.22"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.9.22"
+    id 'io.quarkus'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
+    implementation 'io.quarkus:quarkus-kotlin'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation 'io.quarkus:quarkus-arc'
+    implementation 'io.quarkus:quarkus-smallrye-openapi'
+    implementation 'io.quarkus:quarkus-swagger-ui'
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+    implementation 'io.quarkus:quarkus-hibernate-validator'
+    implementation 'org.eclipse.microprofile.fault-tolerance:microprofile-fault-tolerance-api'
+    implementation 'io.smallrye:smallrye-fault-tolerance'
+    implementation 'io.quarkus:quarkus-mutiny'
+    implementation 'io.smallrye.reactive:mutiny-kotlin:2.2.0'
+    implementation 'io.quarkus:quarkus-smallrye-context-propagation'
+    implementation 'org.eclipse.microprofile.rest.client:microprofile-rest-client-api:3.0'
+    implementation 'org.ow2.asm:asm:9.5'
+    implementation 'io.quarkus:quarkus-rest-client-reactive'
+    testImplementation 'org.mockito:mockito-core:5.17.0' // Core Mockito library
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0") // Mockito Kotlin extensions
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0") // JUnit 5 for testing
+    testImplementation 'org.mockito:mockito-inline:5.2.0'
+    implementation 'net.bytebuddy:byte-buddy:1.17.5'
+    testImplementation 'org.mock-server:mockserver-netty:5.15.0'
+
+}
+
+group 'com.chargeIt'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+    jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED", "-Dnet.bytebuddy.experimental=true")
+        systemProperty 'java.util.logging.manager', 'org.jboss.logmanager.LogManager'
+        systemProperty 'maven.home', System.getenv('MAVEN_HOME') // Replace with the actual Maven home path if needed
+}
+allOpen {
+    annotation("jakarta.ws.rs.Path")
+    annotation("jakarta.enterprise.context.ApplicationScoped")
+    annotation("jakarta.persistence.Entity")
+    annotation("io.quarkus.test.junit.QuarkusTest")
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_21
+    kotlinOptions.javaParameters = true
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_21
+}
